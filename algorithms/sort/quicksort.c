@@ -1,16 +1,18 @@
 #include <stdio.h>
 
-void shellsort(int a[], int N){
-int i,j,h,v;
-for (h=1; h<=N/9; h=3*h+1) ; //Knuth`s formula
-for (; h>0; h/=3)
-  for (i=h+1; i<=N; i+=1){
-    v = a[i]; j=i;
-    while (j>h && a[j-h]>v){
-      a[j] = a[j-h];
-      j-=h;
+void quicksort(int a[], int l, int r){
+  int v,i,j,t;
+  if(r>l){
+    v = a[r]; i=l-1; j=r;
+    for(;;){
+      while (a[++i]<v);
+      while (a[--j]>v);
+      if(i>=j) break;
+      t = a[i]; a[i] = a[j]; a[j] = t;
     }
-    a[j] = v;
+    t = a[i]; a[i] = v; a[r] = t; // place pivot on the correct position
+    quicksort(a,l,i-1);
+    quicksort(a,i+1,r);
   }
 }
 
@@ -23,7 +25,7 @@ int main(void) {
         N++;
     }
 
-    shellsort(a, N);
+    quicksort(a, 1, N);
 
     printf("Sorted numbers:\n");
     for (i = 1; i < N; i++) {
