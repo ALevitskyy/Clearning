@@ -5,6 +5,7 @@
       "label": "C/C++: clang build active file",
       "command": "/usr/bin/clang",
       "args": [
+        "-std=c++17",
         "-fcolor-diagnostics",
         "-fansi-escape-codes",
         "-g",
@@ -15,9 +16,7 @@
       "options": {
         "cwd": "${fileDirname}"
       },
-      "problemMatcher": [
-        "$gcc"
-      ],
+      "problemMatcher": ["$gcc"],
       "group": {
         "kind": "build",
         "isDefault": true
