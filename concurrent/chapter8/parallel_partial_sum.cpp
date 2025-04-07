@@ -73,5 +73,6 @@ void parallel_partial_sum(Iterator first, Iterator last)
   }
   Iterator final_element = block_start;
   std::adavnce(final_element, std::distance(block_start, last) - 1);
-  process_chunk()(block_start, final_element, (num_threads > 1 ? &previous_end_values.back() : 0, 0));
+  process_chunk()(block_start, final_element,
+                  (num_threads > 1 ? &previous_end_values.back() : 0, 0));
 }
