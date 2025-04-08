@@ -1,5 +1,5 @@
 #include <string>
-#include "messages.cpp"
+#include "communication.cpp"
 struct withdraw
 {
   std::string account;
