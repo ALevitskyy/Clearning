@@ -9,30 +9,14 @@
 #include <sys/socket.h>
 #include <netinet/ip.h>
 #include "protocol.h"
-#include "utils.h"
 
 static int32_t one_request(int connfd)
 {
   char rbuf[4 + k_max_msg + 1];
-  errno = 0;
-  int32_t err = read_full(connfd, rbuf, 4);
-  if (err)
+  int32_t len = parse_request(connfd, rbuf);
+  if (len < 0)
   {
-    log_err();
-    return err;
-  }
-  uint32_t len = 0;
-  memcpy(&len, rbuf, 4);
-  if (len > k_max_msg)
-  {
-    msg("too long");
-    return -1;
-  }
-  err = read_full(connfd, &rbuf[4], len);
-  if (err)
-  {
-    msg("read() error");
-    return err;
+    return len; // Error case;
   }
 
   rbuf[4 + len] = '\0';
