@@ -1,7 +1,8 @@
-g++ -Wall -Wextra -O2 -g server.cpp -o server
-g++ -Wall -Wextra -O2 -g client.cpp -o client
-./server &         # Start server in background
-SERVER_PID=$!      # Capture its PID
-sleep 5
-./client
+mkdir -p bin
+g++ -Wall -Wextra -O2 -g server.cpp -o bin/server
+g++ -Wall -Wextra -O2 -g client.cpp -o bin/client
+./bin/server &         # Start server in background
+SERVER_PID=$!          # Capture its PID
+sleep 1
+./bin/client
 kill $SERVER_PID
