@@ -12,20 +12,12 @@
 
 static int32_t query(int fd, const char *text)
 {
-  uint32_t len = (uint32_t)strlen(text);
-  if (len > k_max_msg)
-  {
-    return -1;
-  }
-  char wbuf[4 + k_max_msg];
-  memcpy(wbuf, &len, 4);
-  memcpy(&wbuf[4], text, len);
-  if (int32_t err = write_all(fd, wbuf, 4 + len))
+  if (int32_t err = send_message(fd, text))
   {
     return err;
   }
   char rbuf[4 + k_max_msg + 1];
-  len = parse_request(fd, rbuf);
+  int32_t len = parse_request(fd, rbuf);
   if (len < 0)
   {
     return len; // Error case;

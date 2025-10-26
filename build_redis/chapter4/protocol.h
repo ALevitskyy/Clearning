@@ -31,7 +31,7 @@ inline void log_err()
   }
 }
 
-const size_t k_max_msg = 4096;
+const int32_t k_max_msg = 4096;
 
 static int32_t read_full(int fd, char *buf, size_t n)
 {
@@ -76,7 +76,7 @@ static int32_t parse_request(int fd, char *rbuf)
     return err;
   }
   uint32_t len = 0;
-  memcpy(&len, rbuf, 4);
+  memcpy(&len, rbuf, 4); // Cool trick
   if (len > k_max_msg)
   {
     msg("too long");
@@ -91,4 +91,18 @@ static int32_t parse_request(int fd, char *rbuf)
 
   rbuf[4 + len] = '\0';
   return len;
+}
+
+static int32_t send_message(int fd, const char *text)
+{
+  char wbuf[4 + sizeof(text)];
+  int32_t len = (uint32_t)strlen(text);
+  if (len > k_max_msg)
+  {
+    msg("Sending too long text");
+    return -1;
+  }
+  memcpy(wbuf, &len, 4);
+  memcpy(&wbuf[4], text, len);
+  return write_all(fd, wbuf, 4 + len);
 }
