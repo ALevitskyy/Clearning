@@ -1,3 +1,6 @@
+#ifndef ZSET_HPP
+#define ZSET_HPP
+
 #include "avl.hpp"
 #include "hashtable.hpp"
 
@@ -206,3 +209,5 @@ ZNode *zset_query(
   }
   return found ? container_of(found, ZNode, tree) : NULL;
 }
+
+#endif ZSET_HPP

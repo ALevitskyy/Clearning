@@ -14,6 +14,8 @@ enum
 {
   ERR_UNKNOWN = 1, // unknown command
   ERR_TOO_BIG = 2, // response too big
+  ERR_BAD_TYP = 3, // unexpected value type
+  ERR_BAD_ARG = 4,
 };
 
 inline void die(const char *msg)
